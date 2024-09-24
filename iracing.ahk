@@ -199,11 +199,11 @@ layerPress(*) {
     or WinActive("Content Manager")        ; Content Manager for Assetto Corsa
     {
       simActive := true
-      MsgBox "Enabled"
+      ;MsgBox "Enabled"
     } 
     else {
       simActive := false
-      MsgBox "Disabled"
+      ;MsgBox "Disabled"
     }
 
   if simActive {
