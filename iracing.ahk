@@ -71,26 +71,26 @@ global layerKey := "NumpadEnter"      ; which key to use for layer switching.
 global simActive := false    ; set to 'true' to always run
 
 ; update SimActive whenever Enter is pressed.
-NumpadEnter:: {
-  if WinActive("ahk_class SimWinClass")    ; detect iRacing
-    or WinActive("AC2")                    ; Assetto Corsa Competizione
-    or WinActive("ahk_class acsW")         ; AC sim running 
-    or WinActive("Assetto Corsa Launcher") ; Assetto Corsa Launcher 
-    or WinActive("Content Manager")        ; Content Manager for Assetto Corsa
-    {
-      simActive := true
-    } 
-    else {
-      simActive := false
-    }
-}
+; NumpadEnter:: {
+;   if WinActive("ahk_class SimWinClass")    ; detect iRacing
+;     or WinActive("AC2")                    ; Assetto Corsa Competizione
+;     or WinActive("ahk_class acsW")         ; AC sim running 
+;     or WinActive("Assetto Corsa Launcher") ; Assetto Corsa Launcher 
+;     or WinActive("Content Manager")        ; Content Manager for Assetto Corsa
+;     {
+;       simActive := true
+;     } 
+;     else {
+;       simActive := false
+;     }
+; }
 ;; END Sim Detection
+
+HotKey layerKey, layerPress ;; Call layerPress from layerKey
 
 
 if (simActive == true) { 
   
-  HotKey layerKey, layerPress ;; Call layerPress from layerKey
-
   ;; Alternate layer switching - use dedicated keys to layer switch:
   ;Numpad0::      global NumpadLayer := 1 ; Set Layer 1 with Numpad0     (large key on left, easy to hit)
   ;NumpadEnter::  global NumpadLayer := 2 ; Set Layer 2 with NumpadEnter (large key on right, easy to hit)
@@ -192,39 +192,58 @@ if (simActive == true) {
 layerPress(*) {
   global layerKey         ; imports global
 
-  ; durations for short and long holds 
-  shortHoldTime := 200
-  longHoldTime  := 800
+  if WinActive("ahk_class SimWinClass")    ; detect iRacing
+    or WinActive("AC2")                    ; Assetto Corsa Competizione
+    or WinActive("ahk_class acsW")         ; AC sim running 
+    or WinActive("Assetto Corsa Launcher") ; Assetto Corsa Launcher 
+    or WinActive("Content Manager")        ; Content Manager for Assetto Corsa
+    {
+      simActive := true
+      MsgBox "Enabled"
+    } 
+    else {
+      simActive := false
+      MsgBox "Disabled"
+    }
 
-  ; tooltip text
-  tooltiptimer:=-2400
-  tooltiptext:="Numpad Layer "
-  tooltiphelp:=" (Tap=1, Short Hold=2, Long Hold=3)"
+  if simActive {
 
-  ; Tap - Enable Layer One.
-  global NumpadLayer := 1     ; set layer=1
-  ToolTip(tooltiptext . NumpadLayer . tooltiphelp)
-  SetTimer ()=>ToolTip(), tooltiptimer
+    ; durations for short and long holds 
+    shortHoldTime := 200
+    longHoldTime  := 800
 
-  ; Short Hold, Enable Layer Two
-  Sleep(shortHoldTime)
+    ; tooltip text
+    tooltiptimer:=-2400
+    tooltiptext:="Numpad Layer "
+    tooltiphelp:=" (Tap=1, Short Hold=2, Long Hold=3)"
 
-  if GetKeyState(layerKey,"P") {
-      global NumpadLayer := 2  ; set layer=2
-      ToolTip(tooltiptext . NumpadLayer . tooltiphelp)
-      SetTimer ()=>ToolTip(), tooltiptimer
-  }
+    ; Tap - Enable Layer One.
+    global NumpadLayer := 1     ; set layer=1
+    ToolTip(tooltiptext . NumpadLayer . tooltiphelp)
+    SetTimer ()=>ToolTip(), tooltiptimer
 
-  ; Long Hold, Enable Layer Three
-  Sleep(longHoldTime)
+    ; Short Hold, Enable Layer Two
+    Sleep(shortHoldTime)
 
-  if GetKeyState(layerKey,"P") {
-      global NumpadLayer := 3  ; set layer=2
-      ToolTip(tooltiptext . NumpadLayer . tooltiphelp)
-      SetTimer ()=>ToolTip(), tooltiptimer
+    if GetKeyState(layerKey,"P") {
+        global NumpadLayer := 2  ; set layer=2
+        ToolTip(tooltiptext . NumpadLayer . tooltiphelp)
+        SetTimer ()=>ToolTip(), tooltiptimer
+    }
+
+    ; Long Hold, Enable Layer Three
+    Sleep(longHoldTime)
+
+    if GetKeyState(layerKey,"P") {
+        global NumpadLayer := 3  ; set layer=2
+        ToolTip(tooltiptext . NumpadLayer . tooltiphelp)
+        SetTimer ()=>ToolTip(), tooltiptimer
+    }
+    
   }
 
   KeyWait(layerKey)  ;(Prevents repeat)
+
 }
 
 
