@@ -13,6 +13,9 @@ HotKey layerKey, layerPress         ; Call layerPress from layerKey
 
 global alwaysRun := false           ; set to 'true' to always run
 
+;; state globals
+global tyres := 1
+
 runningSim() {
   if alwaysRun
   or WinActive("ahk_class SimWinClass")  ; iRacing
@@ -39,7 +42,7 @@ Numpad3 up::
 Numpad4 up:: 
 Numpad5 up::  
 Numpad6 up::
-Numpad7 up::  
+Numpad7 up:: 
 Numpad8 up:: 
 Numpad9 up::  
 NumpadAdd up::
@@ -74,15 +77,18 @@ NumpadPgup up:: Send ""
 
   Numpad0::    Send "{Numpad0}"
   NumpadDot::  Send "{NumpadDot}"
-
+  
   ; send the "default" version of keys.
-  NumpadAdd::  Send "{NumpadAdd}"
+  ; NumpadAdd::  Send "{NumpadAdd}"
+  NumpadAdd:: macro("TyresToggle")  
+
   NumpadSub::  Send "{NumpadSub}"
   NumpadMult:: Send "{NumpadMult}"
   NumpadDiv::  Send "{NumpadDiv}"
 
   ; my numpad includes backspace
-  Backspace::  Send "{Backspace}"
+  ; Backspace::  Send "{Backspace}"
+
 #HotIf  ; end Layer One
 
 ;;;;;;;;;;;;;;;;;;; BEGIN LAYER TWO
@@ -139,9 +145,57 @@ NumpadPgup up:: Send ""
 
   ; my numpad includes backspace
   Backspace::  slowSend "{Ctrl down}", "{Backspace}", "{Ctrl up}"
+
 #HotIf  ; end Layer Three
 
 ;;;;;;;;;;;;;;;;; FUNCTIONS:
+
+; a function to hold macros, so they are shareable/asignable. 
+macro(command) {
+  ; https://forums.iracing.com/discussion/61/pit-macros-chat-commands/p1
+  ; there are chat macros which can modify the car setup.
+
+  switch command {
+
+  ;; Tyres Macros
+  ; set Tyres to Dry   
+  case "TyresToggle":
+    global tyres 
+    if (tyres==1) {
+      macro("TyresWet")
+    } else {
+      macro("TyresDry")
+    }
+
+  ; set Tyres to Dry   
+  case "TyresDry":
+    global tyres:=1
+    setTyres(tyres, "Dry")
+
+  ; set Tyres to Wet
+  case "TyresWet":
+    global tyres:=2
+    setTyres(tyres, "Wet")
+
+
+  ;; Fuel Macros
+
+  ;; Pit Macros
+   
+    ;  default:
+;   MsgBox "default macro!"
+
+  }
+}
+
+
+; set Tyres to a number
+setTyres(tyres,tyresName) {
+  Send("t")
+  Sleep(50) ; chat needs a longer sleep before the command
+  Send("{#}tc " . tyres . "{Enter}")
+  onScreenMessage("Tyres now set to " . tyres . " (" . tyresName . ")" )
+}
 
 ; send keys slowly for iRacing
 slowSend(modsDown, key, modsUp) {
@@ -165,6 +219,21 @@ slowSend(modsDown, key, modsUp) {
   Send("{Blind}" . modsUp) 
 }
 
+;; info messages
+onScreenMessage(message) {
+  MyGui := Gui()
+  MyGui.Opt("+AlwaysOnTop -Caption +ToolWindow")  ; +ToolWindow avoids a taskbar button and an alt-tab menu item.
+  MyGui.BackColor := "1b1a1a"  ; Can be any RGB color (it will be made transparent below).
+  MyGui.SetFont("s24")  ; Set a large font size (32-point).
+  CoordText := MyGui.Add("Text", "cLime", message . "  " )  ; XX & YY serve to auto-size the window.
+  ; Make all pixels of this color transparent and make the text itself translucent (150):
+  ;WinSetTransColor(MyGui.BackColor " 150", MyGui)
+
+  MyGui.Show("x200 y50 NoActivate")  ; NoActivate avoids deactivating the currently active window.
+  SetTimer ()=>MyGui.Hide(), -2400
+
+}
+
 ; Layer Switching function
 layerPress(*) {
   global layerKey         ; imports global
@@ -173,24 +242,26 @@ layerPress(*) {
   shortHoldTime := 200
   longHoldTime  := 800
 
-  ; tooltip text
-  tooltiptimer:=-2400
-  tooltiptext:="Numpad Layer "
-  tooltiphelp:=" (Tap=1, Short Hold=2, Long Hold=3)"
+  ; info text
+  infotext:="Numpad Layer "
+  infohelp:=" (Tap=1, Short Hold=2, Long Hold=3)"
 
   if runningSim() {
     ; Tap - Enable Layer One.
     global NumpadLayer := 1     ; set layer=1
-    ToolTip(tooltiptext . NumpadLayer . tooltiphelp)
-    SetTimer ()=>ToolTip(), tooltiptimer
+    ;ToolTip(tooltiptext . NumpadLayer . tooltiphelp)
+    ;SetTimer ()=>ToolTip(), tooltiptimer
+    onScreenMessage(infotext . NumpadLayer) ;  . tooltiphelp)
 
     ; Short Hold, Enable Layer Two
     Sleep(shortHoldTime)
 
     if GetKeyState(layerKey,"P") {
         global NumpadLayer := 2  ; set layer=2
-        ToolTip(tooltiptext . NumpadLayer . tooltiphelp)
-        SetTimer ()=>ToolTip(), tooltiptimer
+        ;ToolTip(tooltiptext . NumpadLayer . tooltiphelp)
+        ;SetTimer ()=>ToolTip(), tooltiptimer
+        onScreenMessage(infotext . NumpadLayer) ;  . tooltiphelp)
+
     }
 
     ; Long Hold, Enable Layer Three
@@ -198,8 +269,9 @@ layerPress(*) {
 
     if GetKeyState(layerKey,"P") {
         global NumpadLayer := 3  ; set layer=2
-        ToolTip(tooltiptext . NumpadLayer . tooltiphelp)
-        SetTimer ()=>ToolTip(), tooltiptimer
+        ;ToolTip(tooltiptext . NumpadLayer . tooltiphelp)
+        ;SetTimer ()=>ToolTip(), tooltiptimer
+        onScreenMessage(infotext . NumpadLayer) ;  . tooltiphelp)
     }
   } 
 
@@ -246,19 +318,19 @@ layerPress(*) {
 ;  | LOCK  | | LEFT  | | NKS   | | RIGHT |
 ;   -------   -------   -------   -------
 ;   -------   -------   -------   -------
-;  | DMG   | | MUTE  | | SORRY | |       |  ; BLANK KEYS NOT YET USED
-;  | REPORT| |SPOTTER| |       | |       |
+;  |       | |       | | SORRY | |       |  ; BLANK KEYS NOT YET USED
+;  |       | |       | |       | |       |
 ;   -------   -------   -------   -------
 ;   -------   -------   -------   -------
-;  | ABS+  | | TC+   | | BB+   | |       |  ; BLANK KEYS NOT YET USED
+;  | ABS+  | | TC+   | | BB+   | |       |
 ;  |       | |       | |       | |       |
 ;   -------   -------   -------   -------
 ;   -------   -------   -------   -------
 ;  | ABS+  | | TC-   | | BB-   | | LAYER |
 ;  |       | |       | |       | | SELECT|
 ;   -------   -------   -------  | TAP=1 |
-;   -----------------   -------  | HOLD=2| 
-;  |                 | |       | | LONG  |  ; BLANK KEYS NOT YET USED
+;   -----------------   -------  | HOLD=2|
+;  |                 | |       | | LONG  |
 ;  |                 | |       | | HOLD=3|
 ;   -----------------   -------   -------
 ;
