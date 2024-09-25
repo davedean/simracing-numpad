@@ -1,15 +1,17 @@
 ; Numpad as Button Box
-; Version: v0.04
+; Version: v0.03
 
 #Requires AutoHotkey v2.0
 #SingleInstance Force           ; only one instance
+
+SetKeyDelay 30 30
 
 global NumpadLayer := 1             ; default "layer".
 global layerKey    := "NumpadEnter" ; which key to use for layer switching.
 
 HotKey layerKey, layerPress         ; Call layerPress from layerKey
 
-global alwaysRun := true        ; set to 'true' to always run
+global alwaysRun := false           ; set to 'true' to always run
 
 runningSim() {
   if alwaysRun
@@ -244,19 +246,19 @@ layerPress(*) {
 ;  | LOCK  | | LEFT  | | NKS   | | RIGHT |
 ;   -------   -------   -------   -------
 ;   -------   -------   -------   -------
-;  |       | |       | | SORRY | |       |  ; BLANK KEYS NOT YET USED
-;  |       | |       | |       | |       |
+;  | DMG   | | MUTE  | | SORRY | |       |  ; BLANK KEYS NOT YET USED
+;  | REPORT| |SPOTTER| |       | |       |
 ;   -------   -------   -------   -------
 ;   -------   -------   -------   -------
-;  | ABS+  | | TC+   | | BB+   | |       |
+;  | ABS+  | | TC+   | | BB+   | |       |  ; BLANK KEYS NOT YET USED
 ;  |       | |       | |       | |       |
 ;   -------   -------   -------   -------
 ;   -------   -------   -------   -------
 ;  | ABS+  | | TC-   | | BB-   | | LAYER |
 ;  |       | |       | |       | | SELECT|
 ;   -------   -------   -------  | TAP=1 |
-;   -----------------   -------  | HOLD=2|
-;  |                 | |       | | LONG  |
+;   -----------------   -------  | HOLD=2| 
+;  |                 | |       | | LONG  |  ; BLANK KEYS NOT YET USED
 ;  |                 | |       | | HOLD=3|
 ;   -----------------   -------   -------
 ;
