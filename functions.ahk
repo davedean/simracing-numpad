@@ -3,36 +3,15 @@
 
 SetKeyDelay 30 30
 
+
+; which key to use for layer switching 
+; TODO: move this somewhere better.
+global layerKey    := "Numpad0" 
+
 HotKey layerKey, layerPress         ; Call layerPress from layerKey
 
-;; state globals
+;; globals for functions
 global tyres := 1                   ; used to track tyre state for tyreToggle
-
-;; TODO: ignoreUpSignals() ; ignores "up" signals, due to my weird numpad.
-Numpad0 up:: 
-Numpad1 up::  
-Numpad2 up::
-Numpad3 up::  
-Numpad4 up:: 
-Numpad5 up::  
-Numpad6 up::
-Numpad7 up:: 
-Numpad8 up:: 
-Numpad9 up::  
-NumpadAdd up::
-NumpadSub up::  
-NumpadMult up::
-NumpadDiv up:: 
-NumpadIns up:: 
-NumpadEnd up::  
-NumpadDown up::
-NumpadPgdn up::  
-NumpadLeft up:: 
-NumpadClear up::  
-NumpadRight up::
-NumpadHome up::  
-NumpadUp up:: 
-NumpadPgup up:: Send "" 
 
 ;;;;;;;;;;;;;;;;; FUNCTIONS:
 
@@ -68,24 +47,34 @@ macro(command) {
 
   ;; Pit Macros
    
-    ;  default:
-;   MsgBox "default macro!"
+  ;  default:
+  ;   MsgBox "default macro!"
 
   }
+}
+
+sendIracingChatMessage(message) {
+  delay := 50
+  
+  Send("t")
+  Sleep(delay) ; chat needs a longer sleep before the command
+  Send(message . "{Enter}")
 }
 
 
 ; set Tyres to a number
 setTyres(tyres,tyresName) {
-  Send("t")
-  Sleep(50) ; chat needs a longer sleep before the command
-  Send("{#}tc " . tyres . "{Enter}")
+  sendIracingChatMessage("{#}tc " . tyres)
   onScreenMessage("Tyres now set to " . tyres . " (" . tyresName . ")" )
 }
 
-; send keys slowly for iRacing
-slowSend(modsDown, key, modsUp) {
 
+; send keys slowly for iRacing
+slowSend(mods, key) {
+
+  modsDown := "{" . mods . " down}"
+  modsUp := "{" . mods . " up}"
+  
   delay := 10
 
   loop 1 {
@@ -104,6 +93,7 @@ slowSend(modsDown, key, modsUp) {
   ; release the modifiers.
   Send("{Blind}" . modsUp) 
 }
+
 
 isSimRunning() {
   if alwaysRun
@@ -128,15 +118,14 @@ isSimRunning() {
 onScreenMessage(message) {
   MyGui := Gui()
   MyGui.Opt("+AlwaysOnTop -Caption +ToolWindow")  ; +ToolWindow avoids a taskbar button and an alt-tab menu item.
-  MyGui.BackColor := "1b1a1a"  ; Can be any RGB color (it will be made transparent below).
-  MyGui.SetFont("s24")  ; Set a large font size (32-point).
+  MyGui.BackColor := "1b1a1a" 
+  MyGui.SetFont("s24")  ; Set a large font size
   CoordText := MyGui.Add("Text", "cLime", message . "  " )  ; XX & YY serve to auto-size the window.
   ; Make all pixels of this color transparent and make the text itself translucent (150):
   ;WinSetTransColor(MyGui.BackColor " 150", MyGui)
 
   MyGui.Show("x200 y50 NoActivate")  ; NoActivate avoids deactivating the currently active window.
   SetTimer ()=>MyGui.Hide(), -2400
-
 }
 
 ; Layer Switching function
@@ -154,18 +143,14 @@ layerPress(*) {
   if isSimRunning() {
     ; Tap - Enable Layer One.
     global NumpadLayer := 1     ; set layer=1
-    ;ToolTip(tooltiptext . NumpadLayer . tooltiphelp)
-    ;SetTimer ()=>ToolTip(), tooltiptimer
-    onScreenMessage(infotext . NumpadLayer) ;  . tooltiphelp)
+    onScreenMessage(infotext . NumpadLayer . infohelp) 
 
     ; Short Hold, Enable Layer Two
     Sleep(shortHoldTime)
 
     if GetKeyState(layerKey,"P") {
         global NumpadLayer := 2  ; set layer=2
-        ;ToolTip(tooltiptext . NumpadLayer . tooltiphelp)
-        ;SetTimer ()=>ToolTip(), tooltiptimer
-        onScreenMessage(infotext . NumpadLayer) ;  . tooltiphelp)
+        onScreenMessage(infotext . NumpadLayer . infohelp) 
 
     }
 
@@ -174,9 +159,7 @@ layerPress(*) {
 
     if GetKeyState(layerKey,"P") {
         global NumpadLayer := 3  ; set layer=2
-        ;ToolTip(tooltiptext . NumpadLayer . tooltiphelp)
-        ;SetTimer ()=>ToolTip(), tooltiptimer
-        onScreenMessage(infotext . NumpadLayer) ;  . tooltiphelp)
+        onScreenMessage(infotext . NumpadLayer . infohelp) 
     }
   } 
 
