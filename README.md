@@ -73,3 +73,64 @@ Three layers, times 15 keys, gives 45 virtual keys available from the number pad
 1. Open your sim
 2. Go to your sims keyboard configuration (eg: in iRacing, you need to start a Test Drive, then hit "Configure")
 3. For each function you want to map to a key, find the function, and map it to the key you want to use, on the layer you want to use.
+
+
+
+
+```bash
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; BEGIN NOTES:
+
+; Why Not Map NumLock?
+; The cheap numpad I bought treats numlock weirdly. It doesn't send NumLock to the PC.
+; AND, for numlock supported keys, when numlock is on, it sends multiple numlock down/up surrounding the key. It's garbage.
+; So I can't see numlock presses or get its state, and I'm ignoring it.
+
+
+; PHYSICAL LAYOUT (of the cheap numpad I bought):
+;   -------   -------   -------   -------
+;  | NUM   | |  /    | |  *    | |  -    |  ; NUM LOCK IS IGNORED
+;  | LOCK  | |       | |       | |       |
+;   -------   -------   -------   -------
+;   -------   -------   -------   -------
+;  |   7   | |   8   | |   9   | |   +   |
+;  |       | |       | |       | |       |
+;   -------   -------   -------   -------
+;   -------   -------   -------   -------
+;  |   4   | |   5   | |   6   | | Back  |
+;  |       | |       | |       | | Space |
+;   -------   -------   -------   -------
+;   -------   -------   -------   -------
+;  |   1   | |   2   | |   3   | | Enter |
+;  |       | |       | |       | |       |
+;   -------   -------   -------  |       |
+;   -----------------   -------  |       |
+;  | 0               | |   .   | |       |
+;  |                 | |       | |       |
+;   -----------------   -------   -------
+
+
+; MY CURRENT LAYOUT (Layer 1):
+;   -------   -------   -------   -------
+;  | NUM   | | PASS  | | THA   | | PASS  |  ; NUM LOCK is IGNORED
+;  | LOCK  | | LEFT  | | NKS   | | RIGHT |
+;   -------   -------   -------   -------
+;   -------   -------   -------   -------
+;  |       | |       | | SORRY | |       |  ; BLANK KEYS NOT YET USED
+;  |       | |       | |       | |       |
+;   -------   -------   -------   -------
+;   -------   -------   -------   -------
+;  | ABS+  | | TC+   | | BB+   | |       |
+;  |       | |       | |       | |       |
+;   -------   -------   -------   -------
+;   -------   -------   -------   -------
+;  | ABS+  | | TC-   | | BB-   | | LAYER |
+;  |       | |       | |       | | SELECT|
+;   -------   -------   -------  | TAP=1 |
+;   -----------------   -------  | HOLD=2|
+;  |                 | |       | | LONG  |
+;  |                 | |       | | HOLD=3|
+;   -----------------   -------   -------
+;
+
+```
