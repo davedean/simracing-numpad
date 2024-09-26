@@ -32,7 +32,7 @@ NumpadEnter up:: Send ""
 ;; Default Key Assignments, tested in iRacing:
 
 ; LAYER ONE
-#HotIf (isSimRunning()) and (NumpadLayer == 1) 
+#HotIf (isSimRunning() and (NumpadLayer == 1)) 
 
   Numpad1::    Send "{Numpad1}"
   Numpad2::    Send "{Numpad2}"
@@ -54,14 +54,11 @@ NumpadEnter up:: Send ""
   NumpadDiv::  Send "{NumpadDiv}"
   NumpadEnter:: Send "{NumpadEnter}"
 
-  ; my numpad includes backspace
-  Backspace::  Send "{Backspace}"
-  
   HotIf()
 #HotIf  ; end Layer One
 
 ; BEGIN LAYER TWO
-#HotIf (isSimRunning()) and  (NumpadLayer == 2)
+#HotIf (isSimRunning() and (NumpadLayer == 2))
 
   ;; send with SHIFT:
   Numpad1::    slowSend "Shift", "{Numpad1}"
@@ -79,18 +76,16 @@ NumpadEnter up:: Send ""
   NumpadSub::  slowSend "Shift", "{NumpadSub}"
   NumpadMult:: slowSend "Shift", "{NumpadMult}"
   NumpadDiv::  slowSend "Shift", "{NumpadDiv}"
-  NumpadEnter:: slowSend "Shift", "{NumpadEnter}" ; TODO: make enter work sensibly
+  NumpadEnter:: slowSend "Shift", "{NumpadEnter}"
 
   ;; these don't like SHIFT
   ; Numpad0::    slowSend "Alt", "{Numpad0}" ; used for layerKey, do not define here
   NumpadDot::  slowSend "Alt", "{NumpadDot}"
 
-  ; my numpad includes backspace
-  Backspace::  slowSend "Shift", "{Backspace}"
 #HotIf ; end Layer Two
 
 ; BEGIN LAYER THREE
-#HotIf (isSimRunning()) and (NumpadLayer == 3)
+#HotIf (isSimRunning() and (NumpadLayer == 3))
 
   ; send the "numlock on" version of keys plus CTRL
   Numpad1::    slowSend "Ctrl", "{Numpad1}"
@@ -112,10 +107,7 @@ NumpadEnter up:: Send ""
   NumpadSub::  slowSend "Ctrl", "{NumpadSub}"
   NumpadMult:: slowSend "Ctrl", "{NumpadMult}"
   NumpadDiv::  slowSend "Ctrl", "{NumpadDiv}"
-  ;NumpadEnter:: slowSend "Ctrl", "{NumpadEnter}" ; TODO: make enter work sensibly
-
-  ; my numpad includes backspace
-  Backspace::  slowSend "Ctrl", "{Backspace}"
+  NumpadEnter:: slowSend "Ctrl", "{NumpadEnter}" 
 
 #HotIf  ; end Layer Three
 
