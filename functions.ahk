@@ -23,7 +23,7 @@ macro(command) {
   switch command {
 
   ;; Tyres Macros
-  ; set Tyres to Dry   
+  ; toggle Tyres between Dry and Wet   
   case "TyresToggle":
     global tyres 
     if (tyres==1) {
@@ -98,7 +98,7 @@ slowSend(mods, key) {
 isSimRunning() {
   if alwaysRun
   or WinActive("ahk_class SimWinClass")  ; iRacing
-
+  or WinActive("ahk_exe SimHubWPF")      ; Sim Hub
   ;; not tested assigning in these, but keys should work
   ;; iRacing specific macros will not.
   

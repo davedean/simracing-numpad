@@ -25,7 +25,8 @@ NumpadClear up::
 NumpadRight up::
 NumpadHome up::  
 NumpadUp up:: 
-NumpadPgup up:: Send "" 
+NumpadPgup up:: 
+NumpadEnter up:: Send "" 
 
 
 ;; Default Key Assignments, tested in iRacing:
@@ -43,7 +44,7 @@ NumpadPgup up:: Send ""
   Numpad8::    Send "{Numpad8}"
   Numpad9::    Send "{Numpad9}"
 
-  Numpad0::    Send "{Numpad0}"
+  ;Numpad0::    Send "{Numpad0}" ; using this as layerKey so not defined.
   NumpadDot::  Send "{NumpadDot}"
   
   ; send the "default" version of keys.
@@ -51,10 +52,11 @@ NumpadPgup up:: Send ""
   NumpadSub::  Send "{NumpadSub}"
   NumpadMult:: Send "{NumpadMult}"
   NumpadDiv::  Send "{NumpadDiv}"
+  NumpadEnter:: Send "{NumpadEnter}"
 
   ; my numpad includes backspace
   Backspace::  Send "{Backspace}"
-
+  
   HotIf()
 #HotIf  ; end Layer One
 
@@ -77,9 +79,10 @@ NumpadPgup up:: Send ""
   NumpadSub::  slowSend "Shift", "{NumpadSub}"
   NumpadMult:: slowSend "Shift", "{NumpadMult}"
   NumpadDiv::  slowSend "Shift", "{NumpadDiv}"
+  NumpadEnter:: slowSend "Shift", "{NumpadEnter}" ; TODO: make enter work sensibly
 
   ;; these don't like SHIFT
-  Numpad0::    slowSend "Alt", "{Numpad0}"
+  ; Numpad0::    slowSend "Alt", "{Numpad0}" ; used for layerKey, do not define here
   NumpadDot::  slowSend "Alt", "{NumpadDot}"
 
   ; my numpad includes backspace
@@ -101,7 +104,7 @@ NumpadPgup up:: Send ""
   Numpad9::    slowSend "Ctrl", "{Numpad9}"
 
   ;; use CTRL 
-  Numpad0::    slowSend "Ctrl", "{Numpad0}"
+  ;Numpad0::    slowSend "Ctrl", "{Numpad0}" ; used for layerKey, do not define here
   NumpadDot::  slowSend "Ctrl", "{NumpadDot}"
 
   ; send the key plus CTRL
@@ -109,6 +112,7 @@ NumpadPgup up:: Send ""
   NumpadSub::  slowSend "Ctrl", "{NumpadSub}"
   NumpadMult:: slowSend "Ctrl", "{NumpadMult}"
   NumpadDiv::  slowSend "Ctrl", "{NumpadDiv}"
+  ;NumpadEnter:: slowSend "Ctrl", "{NumpadEnter}" ; TODO: make enter work sensibly
 
   ; my numpad includes backspace
   Backspace::  slowSend "Ctrl", "{Backspace}"
