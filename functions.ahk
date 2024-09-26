@@ -4,14 +4,37 @@
 SetKeyDelay 30 30
 
 
-; which key to use for layer switching 
-; TODO: move this somewhere better.
-global layerKey    := "Numpad0" 
-
-HotKey layerKey, layerPress         ; Call layerPress from layerKey
-
 ;; globals for functions
 global tyres := 1                   ; used to track tyre state for tyreToggle
+
+;; ignores "up" signals, due to my numpad sending these.
+Numpad0 up:: 
+Numpad1 up::  
+Numpad2 up::
+Numpad3 up::  
+Numpad4 up:: 
+Numpad5 up::  
+Numpad6 up::
+Numpad7 up:: 
+Numpad8 up:: 
+Numpad9 up::  
+NumpadAdd up::
+NumpadSub up::  
+NumpadMult up::
+NumpadDiv up:: 
+NumpadIns up:: 
+NumpadEnd up::  
+NumpadDown up::
+NumpadPgdn up::  
+NumpadLeft up:: 
+NumpadClear up::  
+NumpadRight up::
+NumpadHome up::  
+NumpadUp up:: 
+NumpadPgup up:: 
+NumpadEnter up:: Send "" 
+;; end ignoring "up" signals
+
 
 ;;;;;;;;;;;;;;;;; FUNCTIONS:
 
