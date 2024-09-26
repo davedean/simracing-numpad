@@ -12,7 +12,8 @@ global alwaysRun := false           ; set to 'true' to always run
 
 
 ; LAYER ONE
-HotIf("(isSimRunning()) and (NumpadLayer == 1)")
+#HotIf (isSimRunning() and (NumpadLayer == 1))
+HotIf("(isSimRunning() and (NumpadLayer == 1))")
 
   ; Examples:
 
@@ -34,7 +35,8 @@ HotIf("(isSimRunning()) and (NumpadLayer == 1)")
 HotIf()
 
 ; LAYER TWO
-HotIf("(isSimRunning()) and (NumpadLayer == 2)")
+#HotIf (isSimRunning() and (NumpadLayer == 2))
+HotIf("(isSimRunning() and (NumpadLayer == 2))")
 
   ; send an iRacing chat message
   Hotkey "NumpadDel", "Off"                                  ; turn off the default hotkey 
@@ -45,10 +47,13 @@ HotIf("(isSimRunning()) and (NumpadLayer == 2)")
 
 HotIf()
 
-; LAYER THREE
-HotIf("(isSimRunning()) and (NumpadLayer == 3)")
 
-  ; my numpad includes backspace, why not use it?
-  Backspace::  slowSend "Ctrl" "{Backspace}"
+; LAYER THREE
+#HotIf (isSimRunning() and (NumpadLayer == 3))
+HotIf("(isSimRunning() and (NumpadLayer == 3))")
+  ; new keys or overrides go in here
+
+  ; my numpad includes backspace
+  Backspace::  slowSend "Ctrl", "{Backspace}"
 
 HotIf()
