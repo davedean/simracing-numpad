@@ -8,8 +8,6 @@
         
 #Include functions.ahk     ; functions containing logic
 
-#Include default_keys.ahk  ; the default key setup 
-
-#Include config.ahk        ; your user-specific config
+#Include config.ahk        ; map keys to functions and other keys
 
 
