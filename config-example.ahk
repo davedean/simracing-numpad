@@ -28,17 +28,27 @@ HotIf("(isSimRunning()) and (NumpadLayer == 1)")
   Hotkey "NumpadDel", "Off"                           ; turn off the default hotkey 
   NumpadDel:: sendIracingChatMessage("Nice Driving!") ; add your override
 
+  ; my numpad includes backspace, why not use it?
+  Backspace::  Send "{Backspace}"
+
 HotIf()
 
 ; LAYER TWO
-HotIf("(isSimRunning()) and (NumpadLayer == 1)")
+HotIf("(isSimRunning()) and (NumpadLayer == 2)")
 
   ; send an iRacing chat message
   Hotkey "NumpadDel", "Off"                                  ; turn off the default hotkey 
   NumpadDel:: sendIracingChatMessage("Heading to the pits!") ; add your override
 
+  ; my numpad includes backspace, why not use it?
+  Backspace::  slowSend "Shift" "{Backspace}"
+
 HotIf()
 
 ; LAYER THREE
-HotIf("(isSimRunning()) and (NumpadLayer == 1)")
+HotIf("(isSimRunning()) and (NumpadLayer == 3)")
+
+  ; my numpad includes backspace, why not use it?
+  Backspace::  slowSend "Ctrl" "{Backspace}"
+
 HotIf()
