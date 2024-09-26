@@ -3,27 +3,30 @@ An AutoHotKey (AHK) script for iRacing, for use with a numpad.
 
 ### What is this? 
 
-This is an AutoHotKey script to turn a "numpad" into a multi-layer input device.
+In simracing I want some keys available to control things.
+
+This is an AutoHotKey script to turn a "numpad" into a multi-layer input device. 
+
 
 ### What is a layer?
 
-A layer is another "virtual" set of keys. So the default is "layer 1", but if you switch to "layer 2", you can assign those physical keys again to different functions.
+A layer is another "virtual" set of keys. 
 
-### Why? 
+So the default is "layer 1", but if you switch to "layer 2", you can assign those physical keys again to different functions.
 
-Because in simracing I want some keys available to control things, and layers add virtual keys so there's lots.
+And again, for "layer 3".
 
-### How many physical keys?
+### How many keys?
 
-Using a cheap numpad, I have 18 keys. On my keypad, NumLock is unusable, one key is "backspace" (why?) so also unusable, and I'm using Enter to change layers.
-
-That leaves 15 physical keys available.
-
-### How many layers?
+Using a cheap numpad, I have 15 usable keys.
 
 This script is set up for THREE layers. 
 
-To change layer, you use the layerKey (default is NumpadEnter, and tooltips will tell you when you change layer)
+So 45 virtual keys.
+
+### Changing layer
+
+To change layer, you use the layerKey (default is Numpad0)
 
 Tap it without holding to select "layer 1".
 
@@ -31,21 +34,29 @@ Hold it for a short duration to select "layer 2".
 
 Hold it for a long duration to select "layer 3".
 
-Three layers, times 15 keys, gives 45 virtual keys available from the number pad.
-
 ### How do I install this?
 
-1. Install AutoHotKey version 2+
-2. Tell AutoHotKey to run this script
-3. You can tell it launch at boot, if desired.
+1. Copy the repo to a directory on your computer.
+2. Install AutoHotKey version 2+
+3. Tell AutoHotKey to run "Simracing Numpad.ahk"
 
 ### How do I use the script?
 
 1. Open your sim (iRacing, ACC and AC will be auto-detected and enable the script).
 2. Press keys, and they will be sent to the sim.
-3. To change layer, tap or hold the layerKey (Tooltips will tell you whats happening) 
+3. To change layer, tap or hold the layerKey (Tooltthe on-screen-display will tell you whats happening) 
 2. Assign keys in your sim.
+4. Edit the config.ahk if you want to change things.
 
+### What can I configure in config.ahk?
+
+You can override any key, to send a different key or run a function.
+
+Examples:
+- make Numpad1 send Numpad4
+- make Numpad0 send "gg"
+- make NumpadAdd run the "tyresToggle" macro (to change from wet to dry tyres, or vice-versa)
+- make NumpadDel send an iRacing message "Lol I won"
 
 ### How do I configure my sim?
 
@@ -76,61 +87,59 @@ Three layers, times 15 keys, gives 45 virtual keys available from the number pad
 
 
 
+### Why Not Map NumLock?
 
-```bash
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; BEGIN NOTES:
-
-; Why Not Map NumLock?
-; The cheap numpad I bought treats numlock weirdly. It doesn't send NumLock to the PC.
-; AND, for numlock supported keys, when numlock is on, it sends multiple numlock down/up surrounding the key. It's garbage.
-; So I can't see numlock presses or get its state, and I'm ignoring it.
+The cheap numpad I bought treats numlock weirdly. It doesn't send NumLock to the PC.
+AND, for numlock supported keys, when numlock is on, it sends multiple numlock down/up surrounding the key. It's garbage.
+So I can't see numlock presses or get its state, and I'm ignoring it.
 
 
-; PHYSICAL LAYOUT (of the cheap numpad I bought):
-;   -------   -------   -------   -------
-;  | NUM   | |  /    | |  *    | |  -    |  ; NUM LOCK IS IGNORED
-;  | LOCK  | |       | |       | |       |
-;   -------   -------   -------   -------
-;   -------   -------   -------   -------
-;  |   7   | |   8   | |   9   | |   +   |
-;  |       | |       | |       | |       |
-;   -------   -------   -------   -------
-;   -------   -------   -------   -------
-;  |   4   | |   5   | |   6   | | Back  |
-;  |       | |       | |       | | Space |
-;   -------   -------   -------   -------
-;   -------   -------   -------   -------
-;  |   1   | |   2   | |   3   | | Enter |
-;  |       | |       | |       | |       |
-;   -------   -------   -------  |       |
-;   -----------------   -------  |       |
-;  | 0               | |   .   | |       |
-;  |                 | |       | |       |
-;   -----------------   -------   -------
+### Whats an example use of this?
+
+```
+PHYSICAL LAYOUT (of the cheap numpad I bought):
+  -------   -------   -------   -------
+ | NUM   | |  /    | |  *    | |  -    |  ; NUM LOCK IS IGNORED
+ | LOCK  | |       | |       | |       |
+  -------   -------   -------   -------
+  -------   -------   -------   -------
+ |   7   | |   8   | |   9   | |   +   |
+ |       | |       | |       | |       |
+  -------   -------   -------   -------
+  -------   -------   -------   -------
+ |   4   | |   5   | |   6   | | Back  |
+ |       | |       | |       | | Space |
+  -------   -------   -------   -------
+  -------   -------   -------   -------
+ |   1   | |   2   | |   3   | | Enter |
+ |       | |       | |       | |       |
+  -------   -------   -------  |       |
+  -----------------   -------  |       |
+ | 0               | |   .   | |       |
+ |                 | |       | |       |
+  -----------------   -------   -------
 
 
-; MY CURRENT LAYOUT (Layer 1):
-;   -------   -------   -------   -------
-;  | NUM   | | PASS  | | THA   | | PASS  |  ; NUM LOCK is IGNORED
-;  | LOCK  | | LEFT  | | NKS   | | RIGHT |
-;   -------   -------   -------   -------
-;   -------   -------   -------   -------
-;  |       | |       | | SORRY | |       |  ; BLANK KEYS NOT YET USED
-;  |       | |       | |       | |       |
-;   -------   -------   -------   -------
-;   -------   -------   -------   -------
-;  | ABS+  | | TC+   | | BB+   | |       |
-;  |       | |       | |       | |       |
-;   -------   -------   -------   -------
-;   -------   -------   -------   -------
-;  | ABS+  | | TC-   | | BB-   | | LAYER |
-;  |       | |       | |       | | SELECT|
-;   -------   -------   -------  | TAP=1 |
-;   -----------------   -------  | HOLD=2|
-;  |                 | |       | | LONG  |
-;  |                 | |       | | HOLD=3|
-;   -----------------   -------   -------
-;
+MY CURRENT LAYOUT (Layer 1):
+  -------   -------   -------   -------
+ | NUM   | | PASS  | | THA   | | PASS  |  ; NUM LOCK is IGNORED
+ | LOCK  | | LEFT  | | NKS   | | RIGHT |
+  -------   -------   -------   -------
+  -------   -------   -------   -------
+ |  DMG  | | MUTE  | | SORRY | | TOGGLE|  
+ |REPORT | |SPOTTER| |       | | TYRES |
+  -------   -------   -------   -------
+  -------   -------   -------   -------
+ | ABS+  | | TC+   | | BB+   | |       |
+ |       | |       | |       | |       |
+  -------   -------   -------   -------
+  -------   -------   -------   -------
+ | ABS+  | | TC-   | | BB-   | | LAYER |
+ |       | |       | |       | | SELECT|
+  -------   -------   -------  | TAP=1 |
+  -----------------   -------  | HOLD=2|
+ |                 | |       | | LONG  |
+ |                 | |       | | HOLD=3|
+  -----------------   -------   -------
 
 ```
