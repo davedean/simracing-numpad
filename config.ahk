@@ -49,24 +49,36 @@ HotKey layerKey, layerPress         ; Call layerPress from layerKey - required!
 #HotIf (isSimRunning() and (NumpadLayer == 2))
   ; layer 2 sends keys with SHIFT except where shift does not work, then sends ALT instead (0, Dot)
 
-  Numpad1::    slowSend "Shift", "{Numpad1}"
-  Numpad2::    slowSend "Shift", "{Numpad2}"
-  Numpad3::    slowSend "Shift", "{Numpad3}"
-  Numpad4::    slowSend "Shift", "{Numpad4}"
-  Numpad5::    slowSend "Shift", "{Numpad5}"
-  Numpad6::    slowSend "Shift", "{Numpad6}"
-  Numpad7::    slowSend "Shift", "{Numpad7}"
-  Numpad8::    slowSend "Shift", "{Numpad8}"
+                                                   ; What I have these mapped to in iRacing:
+  ;Numpad1::    slowSend "Shift", "{Numpad1}"
+  ;Numpad2::    slowSend "Shift", "{Numpad2}"
+  ;Numpad3::    slowSend "Shift", "{Numpad3}"
+  ;Numpad4::    slowSend "Shift", "{Numpad4}"
+  ;Numpad5::    slowSend "Shift", "{Numpad5}"
+  ;Numpad6::    slowSend "Shift", "{Numpad6}"
+  ;Numpad7::    slowSend "Shift", "{Numpad7}"  
+  ;Numpad8::    slowSend "Shift", "{Numpad8}"
   Numpad9::    slowSend "Shift", "{Numpad9}"
 
-  NumpadAdd::  slowSend "Shift", "{NumpadAdd}"
-  NumpadSub::  slowSend "Shift", "{NumpadSub}"
-  NumpadMult:: slowSend "Shift", "{NumpadMult}"
-  NumpadDiv::  slowSend "Shift", "{NumpadDiv}"
+  Numpad1::    setPitCommand("tyresNone","")       ; no tyres 
+  Numpad2::    setPitCommand("tyresLeftRear","")   ; no tyres 
+  Numpad3::    setPitCommand("tyresRightRear","")  ; no tyres 
+  Numpad4::    setPitCommand("tyresAll","")        ; all tyres
+  Numpad5::    setPitCommand("tyresLeftFront","")  ; tyres - left front
+  Numpad6::    setPitCommand("tyresRightFront","") ; tyres - right front
+  Numpad7::    setPitCommand("fastRepairOn","")    ; request fast repair
+  Numpad8::    setPitCommand("fastRepairOff","")   ; cancel fast repair
+  
+
+  NumpadAdd::  slowSend "Shift", "{NumpadAdd}"     ; 
+  NumpadSub::  slowSend "Shift", "{NumpadSub}"     ; 
+  NumpadMult:: slowSend "Shift", "{NumpadMult}"    ; 
+  NumpadDiv::  slowSend "Shift", "{NumpadDiv}"     ; TODO: no fuel
 
   ; NumpadEnter:: slowSend "Shift", "{NumpadEnter}"  ; used for layerKey, do not define unless using different layerKey
 
-  Numpad0::    slowSend "Alt", "{Numpad0}"
+  ; Numpad0::    slowSend "Alt", "{Numpad0}"
+  Numpad0::    Send "{F5}"                         ; show Tyres page, so I can manage Pit
   NumpadDot::  slowSend "Alt", "{NumpadDot}"
 
 #HotIf ; end Layer Two

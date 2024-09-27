@@ -88,9 +88,59 @@ sendIracingChatMessage(message) {
 
 ; set a Pit Command
 setPitCommand(object,action) {
+
+  ; from: https://support.iracing.com/support/solutions/articles/31000170165-pit-macros-chat-commands
+
+  ;Command	       Description
+  ;#help <command> Print a list of commands available or list additional information about individual commands
+  ;#clear          Uncheck all pit options
+  ;#cleartires	Uncheck all tires, but leave everything else alone
+  ;#lf [[+|-]<pressure>[k|p]]        Change the left front tire and optionally set pressure in psi or kpa
+  ;#rf [[+|-]<pressure>[k|p]]        Change the right front tire and optionally set pressure in psi or kpa
+  ;#lr [[+|-]<pressure>[k|p]]        Change the left rear tire and optionally set pressure in psi or kpa
+  ;#rr [[+|-]<pressure>[k|p]]	       Change the right rear tire and optionally set pressure in psi or kpa
+  ;#l                                Change left-side tires
+  ;#r	                               Change right-side tires
+  ;#t	                               Change all tires
+  ;#tc <compound>                    Select tire compound, specifying which compound by numerical order (ex. "#tc 1" selects the first compound)
+  ;#fuel [[+|-]<amount>[l|g|k]]      Add fuel, optionally specifying how much to add in gallons, liters or kilograms
+  ;#autofuel [+|-] <margin>          Select Auto fuel, optionally specifying the margin in laps
+  ;#ws	                             Clean windshield
+  ;#fr                               Use fast repair on your vehicle
+  ;
+  ;Prepending the minus sign character "-"   Invert the comand, ex. "#-lf" to uncheck the left front tire, "#-autofuel" to uncheck autofuel
+  ;Prepending the exclamation character "!"  Toggle the command, ex. "#!lf" to toggle changing the left front tire, "#!autofuel" to uncheck autofuel
+
+  switch object {
+    case "tyresAll":
+      command:="{#}t" ; change all tyres
+      message:="Replace All Tyres"
+  case "tyresNone":
+    command:="{#}{-}t" ; change no tyres
+  message:="Do Not Replace Tyres"
+  case "tyresLeftFront":
+    command:="{#}lf" ; change all tyres
+    message:="Replace All Tyres"
+  case "tyresRightFront":
+    command:="{#}rf" ; change all tyres
+    message:="Replace All Tyres"
+  case "tyresLeftRear":
+    command:="{#}lr" ; change all tyres
+    message:="Replace All Tyres"
+  case "tyresRightRear":
+    command:="{#}rr" ; change all tyres
+    message:="Replace All Tyres"
+  case "fastRepairOn":
+      command:="{#}fr" ; use fast repair
+      message:="Requested Fast Repair"
+    case "fastRepairOff":
+        command:="{#}{-}fr" ; use fast repair
+        message:="Fast Repair Cancelled"
+    
+  }
   ; example:
-  sendIracingChatMessage("{#}lf")
-  onScreenMessage("Set Left Front Tyre to be Replaced.")
+  sendIracingChatMessage(command)
+  onScreenMessage(message)
 }
 
 
