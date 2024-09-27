@@ -7,6 +7,11 @@ In simracing I want some keys available to control things.
 
 This is an AutoHotKey script to turn a "numpad" into a multi-layer input device. 
 
+### Features:
+
+- Three Layers
+- On Screen Display for command feedback and help
+- Default key assignments tested
 
 ### What is a layer?
 
