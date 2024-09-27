@@ -1,17 +1,7 @@
 ;; Default Key Assignments are tested in iRacing.
 
-global NumpadLayer := 1             ; default "layer".
-global alwaysRun := true           ; set to 'true' to always run
-
-
-; which key to use for layer switching 
-global layerKey    := "NumpadEnter" 
-
-HotKey layerKey, layerPress         ; Call layerPress from layerKey - required!
-
-
 ; LAYER ONE
-#HotIf (isSimRunning() and (NumpadLayer == 1)) 
+#HotIf (isIracingRunning() and (NumpadLayer == 1)) 
   ; layer 1 sends keys without modifiers
 
                                     ; What I have these mapped to in iRacing:
@@ -30,7 +20,7 @@ HotKey layerKey, layerPress         ; Call layerPress from layerKey - required!
 
   ; call a macro instead of sending a key
   ; NumpadAdd::  Send "{NumpadAdd}" ;  
-  NumpadAdd:: macro("TyresToggle")  ; swaps tyres between Dry/Wet on next pit
+  NumpadAdd:: IracingMacro("TyresToggle")  ; swaps tyres between Dry/Wet on next pit
 
   NumpadSub::  Send "{NumpadSub}"   ; Pass Right
   NumpadMult:: Send "{NumpadMult}"  ; Thanks!
@@ -41,12 +31,10 @@ HotKey layerKey, layerPress         ; Call layerPress from layerKey - required!
   ; my numpad includes backspace
   Backspace::  Send "{Backspace}"   ; 
 
-
-  HotIf()
 #HotIf  ; end Layer One
 
 ; BEGIN LAYER TWO
-#HotIf (isSimRunning() and (NumpadLayer == 2))
+#HotIf (isIracingRunning() and (NumpadLayer == 2))
   ; layer 2 sends keys with SHIFT except where shift does not work, then sends ALT instead (0, Dot)
 
                                                    ; What I have these mapped to in iRacing:
@@ -60,14 +48,14 @@ HotKey layerKey, layerPress         ; Call layerPress from layerKey - required!
   ;Numpad8::    slowSend "Shift", "{Numpad8}"
   Numpad9::    slowSend "Shift", "{Numpad9}"
 
-  Numpad1::    setPitCommand("tyresNone","")       ; no tyres 
-  Numpad2::    setPitCommand("tyresLeftRear","")   ; no tyres 
-  Numpad3::    setPitCommand("tyresRightRear","")  ; no tyres 
-  Numpad4::    setPitCommand("tyresAll","")        ; all tyres
-  Numpad5::    setPitCommand("tyresLeftFront","")  ; tyres - left front
-  Numpad6::    setPitCommand("tyresRightFront","") ; tyres - right front
-  Numpad7::    setPitCommand("fastRepairOn","")    ; request fast repair
-  Numpad8::    setPitCommand("fastRepairOff","")   ; cancel fast repair
+  Numpad1::    setIracingPitCommand("tyresNone","")       ; no tyres 
+  Numpad2::    setIracingPitCommand("tyresLeftRear","")   ; no tyres 
+  Numpad3::    setIracingPitCommand("tyresRightRear","")  ; no tyres 
+  Numpad4::    setIracingPitCommand("tyresAll","")        ; all tyres
+  Numpad5::    setIracingPitCommand("tyresLeftFront","")  ; tyres - left front
+  Numpad6::    setIracingPitCommand("tyresRightFront","") ; tyres - right front
+  Numpad7::    setIracingPitCommand("fastRepairOn","")    ; request fast repair
+  Numpad8::    setIracingPitCommand("fastRepairOff","")   ; cancel fast repair
   
 
   NumpadAdd::  slowSend "Shift", "{NumpadAdd}"     ; 
@@ -78,13 +66,13 @@ HotKey layerKey, layerPress         ; Call layerPress from layerKey - required!
   ; NumpadEnter:: slowSend "Shift", "{NumpadEnter}"  ; used for layerKey, do not define unless using different layerKey
 
   ; Numpad0::    slowSend "Alt", "{Numpad0}"
-  Numpad0::    Send "{F5}"                         ; show Tyres page, so I can manage Pit
+  Numpad0::    Send "{F5}"                         ; show Tyres page, so I can see Tyre replacement
   NumpadDot::  slowSend "Alt", "{NumpadDot}"
 
 #HotIf ; end Layer Two
 
 ; BEGIN LAYER THREE
-#HotIf (isSimRunning() and (NumpadLayer == 3))
+#HotIf (isiRacingRunning() and (NumpadLayer == 3))
   ; layer 3 sends keys with CTRL 
                                                 ; What I have these mapped to in iRacing:
   Numpad1::    slowSend "Ctrl", "{Numpad1}"     ; playback, previous car

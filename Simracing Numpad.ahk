@@ -8,6 +8,20 @@
         
 #Include functions.ahk     ; functions containing logic
 
-#Include config.ahk        ; map keys to functions and other keys
+; global settings:
+global NumpadLayer := 1             ; default "layer".
+global alwaysRun := false           ; set to 'true' to always run
 
+; which key to use for layer switching 
+global layerKey    := "NumpadEnter" 
+
+HotKey layerKey, layerPress         ; Call layerPress from layerKey - required!
+
+; config files:
+
+#Include config-iracing.ahk        ; iracing config
+
+#Include config-acc.ahk            ; ACC config
+
+#Include config-assettocorsa.ahk   ; AC/CM config
 

@@ -40,7 +40,7 @@ NumpadEnter up:: Send ""
 ;;;;;;;;;;;;;;;;; FUNCTIONS:
 
 ; a function to hold macros, so they are shareable/asignable. 
-macro(command) {
+IracingMacro(command) {
   ; https://forums.iracing.com/discussion/61/pit-macros-chat-commands/p1
   ; there are chat macros which can modify the car setup.
 
@@ -51,20 +51,20 @@ macro(command) {
   case "TyresToggle":
     global tyres 
     if (tyres==1) {
-      macro("TyresWet")
+      IracingMacro("TyresWet")
     } else {
-      macro("TyresDry")
+      IracingMacro("TyresDry")
     }
 
   ; set Tyres to Dry   
   case "TyresDry":
     global tyres:=1
-    setTyres(tyres, "Dry")
+    setIracingTyres(tyres, "Dry")
 
   ; set Tyres to Wet
   case "TyresWet":
     global tyres:=2
-    setTyres(tyres, "Wet")
+    setIracingTyres(tyres, "Wet")
 
 
   ;; Fuel Macros
@@ -87,7 +87,7 @@ sendIracingChatMessage(message) {
 
 
 ; set a Pit Command
-setPitCommand(object,action) {
+setIracingPitCommand(object,action) {
 
   ; from: https://support.iracing.com/support/solutions/articles/31000170165-pit-macros-chat-commands
 
@@ -143,10 +143,8 @@ setPitCommand(object,action) {
   onScreenMessage(message)
 }
 
-
-
 ; set Tyres to a number
-setTyres(tyres,tyresName) {
+setIracingTyres(tyres,tyresName) {
   sendIracingChatMessage("{#}tc " . tyres)
   onScreenMessage("Tyres now set to " . tyres . " (" . tyresName . ")" )
 }
@@ -187,18 +185,37 @@ slowSend(mods, key) {
 }
 
 
-isSimRunning() {
+; Check for sims
+isAssettoCorsaRunning() {
   if alwaysRun
-  or WinActive("ahk_class SimWinClass")  ; iRacing
-  or WinActive("ahk_exe SimHubWPF")      ; Sim Hub
-  ;; not tested assigning in these, but keys should work
-  ;; iRacing specific macros will not.
-  
-  or WinActive("AC2")                    ; Assetto Corsa Competizione
 
   or WinActive("ahk_class acsW")         ; AC sim running
   or WinActive("Assetto Corsa Launcher") ; Assetto Corsa Launcher
   or WinActive("Content Manager")        ; Content Manager for Assetto Corsa 
+  {
+    return true
+  } else {
+    return false
+  }
+}
+
+isACCRunning() {
+  if alwaysRun
+
+  or WinActive("AC2")                    ; Assetto Corsa Competizione
+
+  {
+    return true
+  } else {
+    return false
+  }
+}
+
+isIracingRunning() {
+  if alwaysRun
+  or WinActive("ahk_class SimWinClass")  ; iRacing
+  ; or WinActive("ahk_exe SimHubWPF")      ; Sim Hub
+
   {
     return true
   } else {
@@ -218,6 +235,19 @@ onScreenMessage(message) {
 
   MyGui.Show("x200 y50 NoActivate")  ; NoActivate avoids deactivating the currently active window.
   SetTimer ()=>MyGui.Hide(), -2400
+}
+
+
+isSimRunning() {
+  if alwaysRun
+    or isACCRunning() 
+    or isAssettoCorsaRunning()
+    or isIracingRunning() 
+    {
+      return true
+    } else {
+      return false
+    }
 }
 
 ; Layer Switching function
