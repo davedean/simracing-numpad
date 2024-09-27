@@ -1,12 +1,13 @@
 ; Numpad as Button Box
 ; Version: v0.05
 
-SetKeyDelay 30 30
+SetKeyDelay 30 300
 
 
 ;; globals for functions
 global tyres := 1                   ; used to track tyre state for tyreToggle
-
+global stillSending := false        ; used to not overlap sending commands
+ 
 ;; ignores "up" signals, due to my numpad sending these.
 Numpad0 up:: 
 Numpad1 up::  
@@ -85,6 +86,15 @@ sendIracingChatMessage(message) {
 }
 
 
+; set a Pit Command
+setPitCommand(object,action) {
+  ; example:
+  sendIracingChatMessage("{#}lf")
+  onScreenMessage("Set Left Front Tyre to be Replaced.")
+}
+
+
+
 ; set Tyres to a number
 setTyres(tyres,tyresName) {
   sendIracingChatMessage("{#}tc " . tyres)
@@ -95,26 +105,35 @@ setTyres(tyres,tyresName) {
 ; send keys slowly for iRacing
 slowSend(mods, key) {
 
-  modsDown := "{" . mods . " down}"
-  modsUp := "{" . mods . " up}"
-  
-  delay := 10
 
-  loop 1 {
-  ; some iracing mappings appear to be "slow"
-  ; these repeats and delays let it work.
-  ; keeping loop in case I want it later.
-    Send("{Blind}" . modsDown) 
-    Sleep(delay) 
-  }
-  
-  Sleep(delay) 
-  ; send the key
-  Send(key) 
-  Sleep(delay)
+  if !stillSending {
+    global stillSending := true
 
-  ; release the modifiers.
-  Send("{Blind}" . modsUp) 
+    modsDown := "{" . mods . " down}"
+    modsUp := "{" . mods . " up}"
+    
+    delay := 100
+
+    loop 1 {
+    ; some iracing mappings appear to be "slow"
+    ; these repeats and delays let it work.
+    ; keeping loop in case I want it later.
+      Send("{Blind}" . modsDown) 
+      ;Send(modsDown) 
+      Sleep(delay) 
+    }
+    
+    ;Sleep(delay) 
+    ; send the key
+    Send(key) 
+    Sleep(delay)
+
+    ; release the modifiers.
+    Send("{Blind}" . modsUp) 
+  } 
+
+  global stillSending := false
+
 }
 
 
