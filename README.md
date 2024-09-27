@@ -11,7 +11,8 @@ This is an AutoHotKey script to turn a "numpad" into a multi-layer input device.
 
 - Three Layers
 - On Screen Display for command feedback and help
-- Default key assignments tested
+- Default key assignments tested and working in iRacing
+- Assign functions for chat macros (eg: change tyre compound, replace tyres, add fuel .. )
 
 ### What is a layer?
 
@@ -21,17 +22,11 @@ So the default is "layer 1", but if you switch to "layer 2", you can assign thos
 
 And again, for "layer 3".
 
-### How many keys?
-
-Using a cheap numpad, I have 15 usable keys.
-
-This script is set up for THREE layers. 
-
-So 45 virtual keys.
+This turns 15 keys in 45.
 
 ### Changing layer
 
-To change layer, you use the layerKey (default is Numpad0)
+To change layer, you use the layerKey (default is NumpadEnter, as iRacing won't map to Enter anyway)
 
 Tap it without holding to select "layer 1".
 
@@ -49,9 +44,9 @@ Hold it for a long duration to select "layer 3".
 
 1. Open your sim (iRacing, ACC and AC will be auto-detected and enable the script).
 2. Press keys, and they will be sent to the sim.
-3. To change layer, tap or hold the layerKey (Tooltthe on-screen-display will tell you whats happening) 
+3. To change layer, tap or hold the layerKey (The on-screen-display will tell you whats happening) 
 2. Assign keys in your sim.
-4. Edit the config.ahk if you want to change things.
+4. Edit config.ahk if you want to change things.
 
 ### What can I configure in config.ahk?
 
