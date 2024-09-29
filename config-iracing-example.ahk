@@ -1,4 +1,5 @@
 ;; User-Specific Config File
+;; copy to "config-iracing.ahk" and make your changes.
 
 ; LAYER ONE
 #HotIf (isIracingRunning() and (NumpadLayer == 1)) 

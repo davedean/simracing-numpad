@@ -18,7 +18,7 @@ global layerKey    := "NumpadEnter"
 HotKey layerKey, layerPress         ; Call layerPress from layerKey - required!
 
 ; config files:
-#Include *i config-iracing.ahk        ; iracing config
+#Include *i config-iracing.ahk      ; iracing config, *i makes it optional.
 #Include defaults-iracing.ahk
 
 ; TODO:

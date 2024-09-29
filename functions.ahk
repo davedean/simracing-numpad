@@ -1,7 +1,7 @@
 ; Numpad as Button Box
 ; Version: v0.05
 
-SetKeyDelay 30 300
+SetKeyDelay 30 30
 
 
 ;; globals for functions
