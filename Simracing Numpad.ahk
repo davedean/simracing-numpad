@@ -10,7 +10,7 @@
 
 ; global settings:
 global NumpadLayer := 1             ; default "layer".
-global alwaysRun := false           ; set to 'true' to always run
+global alwaysRun := true           ; set to 'true' to always run
 
 ; which key to use for layer switching 
 global layerKey    := "NumpadEnter" 
@@ -18,10 +18,9 @@ global layerKey    := "NumpadEnter"
 HotKey layerKey, layerPress         ; Call layerPress from layerKey - required!
 
 ; config files:
+#Include *i config-iracing.ahk      ; iracing config, *i makes it optional.
+#Include defaults-iracing.ahk
 
-#Include config-iracing.ahk        ; iracing config
-
-#Include config-acc.ahk            ; ACC config
-
-#Include config-assettocorsa.ahk   ; AC/CM config
-
+; TODO:
+;#Include config-acc.ahk            ; ACC config
+;#Include config-assettocorsa.ahk   ; AC/CM config

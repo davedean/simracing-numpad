@@ -1,7 +1,7 @@
 ; Numpad as Button Box
 ; Version: v0.05
 
-SetKeyDelay 30 300
+SetKeyDelay 30 30
 
 
 ;; globals for functions
@@ -35,6 +35,13 @@ NumpadUp up::
 NumpadPgup up:: 
 NumpadEnter up:: Send "" 
 ;; end ignoring "up" signals
+
+
+; Create the layerConditions we will use later.
+#HotIf (isIracingRunning() and (NumpadLayer == 1)) 
+#HotIf (isIracingRunning() and (NumpadLayer == 2)) 
+#HotIf (isIracingRunning() and (NumpadLayer == 3))
+#HotIf
 
 
 ;;;;;;;;;;;;;;;;; FUNCTIONS:
@@ -237,6 +244,29 @@ onScreenMessage(message) {
   SetTimer ()=>MyGui.Hide(), -2400
 }
 
+
+
+; Helper function to execute actions
+ExecuteAction(funcName, params) {
+  %funcName%(params*)
+}
+
+setDefault(sim,layerNum,key,action,params) {
+
+  switch sim {
+  case "ir":
+    simCondition := "isIracingRunning()" 
+  }
+
+  layerCondition := Format("({1} and (NumpadLayer == {2}))", simCondition, layerNum)
+  HotIf layerCondition
+  
+  try Hotkey key, "On"
+  catch as e {
+    ; msgBox e.Message 
+    Hotkey key, (*) => ExecuteAction(action,params)
+  }
+}
 
 isSimRunning() {
   if alwaysRun
