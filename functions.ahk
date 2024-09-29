@@ -37,6 +37,13 @@ NumpadEnter up:: Send ""
 ;; end ignoring "up" signals
 
 
+; Create the layerConditions we will use later.
+#HotIf (isIracingRunning() and (NumpadLayer == 1)) 
+#HotIf (isIracingRunning() and (NumpadLayer == 2)) 
+#HotIf (isIracingRunning() and (NumpadLayer == 3))
+#HotIf
+
+
 ;;;;;;;;;;;;;;;;; FUNCTIONS:
 
 ; a function to hold macros, so they are shareable/asignable. 
@@ -244,11 +251,19 @@ ExecuteAction(funcName, params) {
   %funcName%(params*)
 }
 
-setDefault(key,action,params) {
+setDefault(sim,layerNum,key,action,params) {
+
+  switch sim {
+  case "ir":
+    simCondition := "isIracingRunning()" 
+  }
+
+  layerCondition := Format("({1} and (NumpadLayer == {2}))", simCondition, layerNum)
+  HotIf layerCondition
+  
   try Hotkey key, "On"
-  catch {
-    ;Numpad1::    Send "{Numpad1}"     ; ABS-
-    ; funName := 
+  catch as e {
+    ; msgBox e.Message 
     Hotkey key, (*) => ExecuteAction(action,params)
   }
 }
