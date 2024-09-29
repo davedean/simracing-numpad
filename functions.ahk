@@ -238,6 +238,21 @@ onScreenMessage(message) {
 }
 
 
+
+; Helper function to execute actions
+ExecuteAction(funcName, params) {
+  %funcName%(params*)
+}
+
+setDefault(key,action,params) {
+  try Hotkey key, "On"
+  catch {
+    ;Numpad1::    Send "{Numpad1}"     ; ABS-
+    ; funName := 
+    Hotkey key, (*) => ExecuteAction(action,params)
+  }
+}
+
 isSimRunning() {
   if alwaysRun
     or isACCRunning() 
