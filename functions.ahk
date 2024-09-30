@@ -44,7 +44,9 @@ NumpadEnter up:: Send ""
 #HotIf
 
 
-;;;;;;;;;;;;;;;;; FUNCTIONS:
+;;;;;;;;;;;;;;;;; FUNCTIONS: 
+
+;;;;;;;;;;;;; IRACING FUNCTIONS : 
 
 ; a function to hold macros, so they are shareable/asignable. 
 IracingMacro(command) {
@@ -122,30 +124,30 @@ setIracingPitCommand(object,action) {
     case "tyresAll":
       command:="{#}t" ; change all tyres
       message:="Replace All Tyres"
-  case "tyresNone":
-    command:="{#}{-}t" ; change no tyres
-  message:="Do Not Replace Tyres"
-  case "tyresLeftFront":
-    command:="{#}lf" ; change all tyres
-    message:="Replace All Tyres"
-  case "tyresRightFront":
-    command:="{#}rf" ; change all tyres
-    message:="Replace All Tyres"
-  case "tyresLeftRear":
-    command:="{#}lr" ; change all tyres
-    message:="Replace All Tyres"
-  case "tyresRightRear":
-    command:="{#}rr" ; change all tyres
-    message:="Replace All Tyres"
-  case "fastRepairOn":
-      command:="{#}fr" ; use fast repair
-      message:="Requested Fast Repair"
+    case "tyresNone":
+      command:="{#}{-}t" ; change no tyres
+      message:="Do Not Replace Tyres"
+    case "tyresLeftFront":
+      command:="{#}lf" ; change front left 
+      message:="Replace Left Front Tyres"
+    case "tyresRightFront":
+      command:="{#}rf" ; change front right 
+      message:="Replace Right Front Tyres"
+    case "tyresLeftRear":
+      command:="{#}lr" ; change rear left 
+      message:="Replace Left Rear Tyres"
+    case "tyresRightRear":
+      command:="{#}rr" ; change rear right 
+      message:="Replace Right Rear Tyres"
+    case "fastRepairOn":
+        command:="{#}fr" ; use fast repair
+        message:="Requested Fast Repair"
     case "fastRepairOff":
         command:="{#}{-}fr" ; use fast repair
         message:="Fast Repair Cancelled"
-    
   }
-  ; example:
+
+  ; send command/message
   sendIracingChatMessage(command)
   onScreenMessage(message)
 }
@@ -159,15 +161,14 @@ setIracingTyres(tyres,tyresName) {
 
 ; send keys slowly for iRacing
 slowSend(mods, key) {
-
-
-  if !stillSending {
+  ; block sending overlapping commands as this can send incorrect keys if modifiers are sent
+  if !stillSending { 
     global stillSending := true
 
     modsDown := "{" . mods . " down}"
     modsUp := "{" . mods . " up}"
     
-    delay := 100
+    delay := 50
 
     loop 1 {
     ; some iracing mappings appear to be "slow"
@@ -185,10 +186,11 @@ slowSend(mods, key) {
 
     ; release the modifiers.
     Send("{Blind}" . modsUp) 
+
+    Sleep(delay)
   } 
 
   global stillSending := false
-
 }
 
 
