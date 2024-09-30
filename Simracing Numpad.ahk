@@ -10,7 +10,7 @@
 
 ; global settings:
 global NumpadLayer := 1             ; default "layer".
-global alwaysRun := true           ; set to 'true' to always run
+global alwaysRun := false           ; set to 'true' to always run
 
 ; which key to use for layer switching 
 global layerKey    := "NumpadEnter" 
